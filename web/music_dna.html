@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+<!--
+ For licensing see http://lab.aerotwist.com/canvas/music-dna/LICENSE
+-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+
+  <title>Music DNA</title>
+
+  <link href='http://fonts.googleapis.com/css?family=Roboto:300,700' rel='stylesheet' type='text/css'>
+
+  <style>
+
+    html, body {
+      padding: 0;
+      margin: 0;
+      background: #111;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #file-drop-area {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0) url('drop-a-beat.png') 50% 40% no-repeat;
+      background-size: 420px 88px;
+    }
+
+    #file-drop-area.dropped {
+      background-image: none;
+    }
+
+    #file-drop-area.dropped * {
+      display: none;
+    }
+
+    canvas {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #time {
+      position: absolute;
+      top: 0;
+      height: 4px;
+      left: 0;
+      width: 1%;
+      background: #00B2B2;
+      -webkit-backface-visibility: hidden;
+    }
+
+    #artist-track {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+    }
+
+    #artist {
+      font-family: 'Roboto';
+      font-size: 27px;
+      font-weight: 300;
+      color: #FFF;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+
+    #track {
+      font-family: 'Roboto';
+      font-size: 16px;
+      color: #00B2B2;
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    form {
+      position: absolute;
+      left: 50%;
+      top: 60%;
+      width: 600px;
+      margin-left: -300px;
+      text-align: center;
+      color: #AAA;
+      font-family: 'Roboto';
+      font-size: 16px;
+    }
+
+    form div {
+      text-align: center;
+      margin-bottom: 1em;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="render-area"></canvas>
+  <div id="file-drop-area">
+    <div id="alternative">
+      <form id="file-chooser">
+        <p>Want to use a file input instead?</p>
+        <div>
+          <input name="source-file" id="source-file" type="file" />
+        </div>
+        <div>
+          <input type="submit" />
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="time"></div>
+  <div id="artist-track">
+    <div id="artist"></div>
+    <div id="track"></div>
+  </div>
+
+  <script src="id3.js"></script>
+  <script type="application/dart" src="music_dna.dart"></script>
+  <script src="packages/browser/dart.js"></script>
+</body>
+</html>
