@@ -17,7 +17,7 @@ class AudioRenderer {
 
   int width = 0;
   int height = 0;
-  int outerRadius = 0;
+  double outerRadius = 0.0;
   
   Random _random;
   

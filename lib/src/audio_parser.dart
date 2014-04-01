@@ -17,11 +17,11 @@ class AudioParser {
   
   AudioParser(int dataSize) {
     audioContext = new AudioContext();
+    analyser = audioContext.createAnalyser();
+    gainNode = audioContext.createGain();
     analyser.smoothingTimeConstant = 0.2;
     analyser.fftSize = dataSize;
     gainNode.gain.value = 0.5;
-    analyser = audioContext.createAnalyser();
-    gainNode = audioContext.createGain();
   }
 
   void onDecodeData (buffer) {
