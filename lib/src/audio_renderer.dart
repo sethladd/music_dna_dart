@@ -18,18 +18,18 @@ class AudioRenderer {
   int width = 0;
   int height = 0;
   double outerRadius = 0.0;
-  
+
   Random _random;
-  
+
   AudioRenderer() {
     canvas = querySelector('#render-area');
     ctx = canvas.context2D;
     _random = new Random();
-    
+
     window.onResize.listen((_) => onResize());
     window.onLoad.first.then((_) => onResize());
   }
-  
+
   double random() => _random.nextDouble();
 
   void onResize() {
@@ -88,7 +88,7 @@ class AudioRenderer {
       }
 
       ctx.globalAlpha = volume * 0.09;
-      ctx.fillStyle = 'hsl(' + color + ', 80%, 50%)';
+      ctx.fillStyle = 'hsl($color, 80%, 50%)';
       ctx.beginPath();
       ctx.arc(
         midX + x * distance,

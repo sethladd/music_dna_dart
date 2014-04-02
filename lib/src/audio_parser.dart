@@ -59,11 +59,10 @@ class AudioParser {
 
   // See https://code.google.com/p/dart/issues/detail?id=17956
   Future<AudioBuffer> parseArrayBuffer(TypedData arrayBuffer) {
-    return audioContext.decodeAudioData(arrayBuffer.buffer)
-        .then(onDecodeData)
-        .catchError((e) {
-          print(e);
-        });
+    return audioContext.decodeAudioData(arrayBuffer.buffer).then((x) {
+      var buf = onDecodeData(x);
+      return buf;
+    });
   }
 
   double get time {
