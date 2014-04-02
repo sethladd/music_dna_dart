@@ -41,11 +41,12 @@ main() {
   }
 
   void onSubmit(Event evt) {
-    evt.preventDefault();
-    evt.stopImmediatePropagation();
+    evt..preventDefault()
+       ..stopImmediatePropagation();
 
-    if (fileInput.files.length > 0)
+    if (fileInput.files.length > 0) {
       go(fileInput.files[0]);
+    }
   }
 
   void cancel(Event evt) {
@@ -53,8 +54,8 @@ main() {
   }
 
   void dropFile(MouseEvent evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
+    evt..stopPropagation()
+       ..preventDefault();
 
     var files = evt.dataTransfer.files;
 
