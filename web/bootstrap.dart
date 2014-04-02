@@ -16,26 +16,28 @@ main() {
   var fileUploadForm = querySelector('#file-chooser');
   var fileInput = querySelector('#source-file');
   var ID3 = js.context['ID3'];
-  
-  js.context['loadTagsCallback'] = () {
-    var tags = ID3.callMethod('getAllTags', ["filename.mp3"]);
-    if (tags.artist != null) {
-      artist.text = tags.artist;
-    }
-    if (tags.title != null) {
-      track.text = tags.title;
-    }
-  };
 
   void go(Blob file) {
     musicDNA.parse(file);
     fileDropArea.classes.add('dropped');
-    
+
     var id3FileReader = new js.JsObject(js.context['FileAPIReader'], [file]);
 
-    ID3.callMethod('loadTags', ["filename.mp3", js.context['loadTagsCallback'],
-                                new js.JsObject.jsify({'dataReader': id3FileReader})
-                               ]);
+    ID3.callMethod('loadTags', ["filename.mp3",() {
+        var tags = ID3.callMethod('getAllTags', ["filename.mp3"]);
+        var artistTag = tags['artist'];
+        var titleTag = tags['title'];
+
+        if (artistTag != null) {
+          artist.text = artistTag;
+        }
+
+        if (titleTag != null) {
+          track.text = titleTag;
+        }
+      },
+      new js.JsObject.jsify({'dataReader': id3FileReader})
+    ]);
   }
 
   void onSubmit(Event evt) {
@@ -50,7 +52,7 @@ main() {
     evt.preventDefault();
   }
 
-  void dropFile(Event evt) {
+  void dropFile(MouseEvent evt) {
     evt.stopPropagation();
     evt.preventDefault();
 
@@ -60,7 +62,7 @@ main() {
       go(files[0]);
     }
   }
-  
+
   fileDropArea
     ..onDrop.listen(dropFile)
     ..onDragOver.listen(cancel)

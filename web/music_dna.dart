@@ -9,6 +9,7 @@ import 'dart:typed_data' show Uint8List;
 import 'dart:html'
   show Blob, Element, FileReader, ProgressEvent, document, window, querySelector;
 import 'dart:async' show Future;
+import 'dart:web_audio' show AudioBuffer;
 
 class MusicDNA {
 
@@ -17,11 +18,11 @@ class MusicDNA {
   AudioParser audioParser;
   AudioRenderer audioRenderer;
   Uint8List audioData;
-  int audioDuration = 1;
+  double audioDuration = 1.0;
   double audioTime = 0.0;
   bool audioPlaying = false;
   Element time;
-  
+
   MusicDNA() {
     audioData = new Uint8List(DATA_SIZE);
     audioRenderer = new AudioRenderer();
@@ -30,11 +31,12 @@ class MusicDNA {
     window.animationFrame.then(updateAndRender);
   }
 
-  Future onFileRead(FileReader reader) {
+  Future onFileRead(ProgressEvent evt) {
+    FileReader reader = evt.target as FileReader;
     return audioParser.parseArrayBuffer(reader.result).then(onAudioDataParsed);
   }
 
-  void onAudioDataParsed(buffer) {
+  void onAudioDataParsed(AudioBuffer buffer) {
     audioDuration = buffer.duration;
     audioPlaying = true;
 
@@ -53,9 +55,9 @@ class MusicDNA {
     window.animationFrame.then(updateAndRender);
   }
 
-  void parse(Blob file) {
+  Future parse(Blob file) {
     var fileReader = new FileReader();
-    fileReader.onLoadEnd.listen((_) => onFileRead(fileReader));
     fileReader.readAsArrayBuffer(file);
+    return fileReader.onLoadEnd.first.then(onFileRead);
   }
 }
