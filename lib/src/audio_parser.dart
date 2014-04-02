@@ -45,6 +45,8 @@ class AudioParser {
 
     // Set it up and play it
     sourceNode.buffer = buffer;
+
+    if (sourceNode is! AudioBufferSourceNode) throw "DOH!";
     sourceNode.start();
 
     timePlaybackStarted = new DateTime.now().millisecondsSinceEpoch;
