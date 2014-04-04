@@ -21,31 +21,32 @@ main() {
     musicDNA.parse(file);
     fileDropArea.classes.add('dropped');
 
-//    var id3FileReader = new js.JsObject(js.context['FileAPIReader'], [file]);
-//
-//    ID3.callMethod('loadTags', ["filename.mp3",() {
-//        var tags = ID3.callMethod('getAllTags', ["filename.mp3"]);
-//        var artistTag = tags['artist'];
-//        var titleTag = tags['title'];
-//
-//        if (artistTag != null) {
-//          artist.text = artistTag;
-//        }
-//
-//        if (titleTag != null) {
-//          track.text = titleTag;
-//        }
-//      },
-//      new js.JsObject.jsify({'dataReader': id3FileReader})
-//    ]);
+    var id3FileReader = new js.JsObject(js.context['FileAPIReader'], [file]);
+
+    ID3.callMethod('loadTags', ["filename.mp3", () {
+        var tags = ID3.callMethod('getAllTags', ["filename.mp3"]);
+        var artistTag = tags['artist'];
+        var titleTag = tags['title'];
+
+        if (artistTag != null) {
+          artist.text = artistTag;
+        }
+
+        if (titleTag != null) {
+          track.text = titleTag;
+        }
+      },
+      new js.JsObject.jsify({'dataReader': id3FileReader})
+    ]);
   }
 
   void onSubmit(Event evt) {
-    evt.preventDefault();
-    evt.stopImmediatePropagation();
+    evt..preventDefault()
+       ..stopImmediatePropagation();
 
-    if (fileInput.files.length > 0)
+    if (fileInput.files.length > 0) {
       go(fileInput.files[0]);
+    }
   }
 
   void cancel(Event evt) {
@@ -53,8 +54,8 @@ main() {
   }
 
   void dropFile(MouseEvent evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
+    evt..stopPropagation()
+       ..preventDefault();
 
     var files = evt.dataTransfer.files;
 

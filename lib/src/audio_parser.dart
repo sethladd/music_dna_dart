@@ -11,7 +11,6 @@ class AudioParser {
   AnalyserNode analyser;
   GainNode gainNode;
   AudioBufferSourceNode sourceNode;
-  var audioRenderer = null;
   int timePlaybackStarted = 0;
 
   AudioParser(int dataSize) {
@@ -34,7 +33,6 @@ class AudioParser {
 
     // Make a new source
     if (sourceNode == null) {
-
       sourceNode = audioContext.createBufferSource();
       sourceNode.loop = false;
 
@@ -44,10 +42,9 @@ class AudioParser {
     }
 
     // Set it up and play it
-    sourceNode.buffer = buffer;
-
-    if (sourceNode is! AudioBufferSourceNode) throw "DOH!";
-    sourceNode.start();
+    sourceNode
+      ..buffer = buffer
+      ..start(0);
 
     timePlaybackStarted = new DateTime.now().millisecondsSinceEpoch;
 
@@ -61,10 +58,7 @@ class AudioParser {
 
   // See https://code.google.com/p/dart/issues/detail?id=17956
   Future<AudioBuffer> parseArrayBuffer(TypedData arrayBuffer) {
-    return audioContext.decodeAudioData(arrayBuffer.buffer).then((x) {
-      var buf = onDecodeData(x);
-      return buf;
-    });
+    return audioContext.decodeAudioData(arrayBuffer.buffer).then(onDecodeData);
   }
 
   double get time {

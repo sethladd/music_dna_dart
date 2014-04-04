@@ -31,18 +31,6 @@ class MusicDNA {
     window.animationFrame.then(updateAndRender);
   }
 
-  Future onFileRead(ProgressEvent evt) {
-    FileReader reader = evt.target as FileReader;
-    return audioParser.parseArrayBuffer(reader.result).then(onAudioDataParsed);
-  }
-
-  void onAudioDataParsed(AudioBuffer buffer) {
-    audioDuration = buffer.duration;
-    audioPlaying = true;
-
-    audioRenderer.clear();
-  }
-
   void updateAndRender(num t) {
     audioParser.getAnalyserAudioData(audioData);
     audioTime = audioParser.time / audioDuration;
@@ -58,6 +46,14 @@ class MusicDNA {
   Future parse(Blob file) {
     var fileReader = new FileReader();
     fileReader.readAsArrayBuffer(file);
-    return fileReader.onLoadEnd.first.then(onFileRead);
+    
+    return fileReader.onLoadEnd.first.then((ProgressEvent evt) {
+      var reader = evt.target as FileReader;
+      return audioParser.parseArrayBuffer(reader.result);
+    }).then((AudioBuffer buffer) {
+      audioDuration = buffer.duration;
+      audioPlaying = true;
+      audioRenderer.clear();
+    });
   }
 }
