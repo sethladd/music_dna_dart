@@ -3,9 +3,9 @@
  * For licensing see http://lab.aerotwist.com/canvas/music-dna/LICENSE
  */
 
-import 'music_dna.dart';
-import 'dart:html';
-import 'dart:js' as js;
+import 'music_dna.dart' show MusicDNA;
+import 'dart:html' show Blob, Event, MouseEvent, querySelector;
+import 'dart:js' as js show JsObject, context;
 
 main() {
 

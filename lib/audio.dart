@@ -1,4 +1,4 @@
-library music_dna;
+library audio;
 
 import 'dart:async' show Future;
 import 'dart:typed_data' show TypedData, Uint8List;

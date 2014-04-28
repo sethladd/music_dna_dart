@@ -3,7 +3,7 @@
  * For licensing see http://lab.aerotwist.com/canvas/music-dna/LICENSE
  */
 
-part of music_dna;
+part of audio;
 
 class AudioParser {
 
@@ -28,6 +28,7 @@ class AudioParser {
     if (sourceNode != null) {
       if (sourceNode.playbackState == AudioBufferSourceNode.PLAYING_STATE)
         sourceNode.stop();
+
       sourceNode = null;
     }
 

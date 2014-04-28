@@ -3,7 +3,7 @@
  * For licensing see http://lab.aerotwist.com/canvas/music-dna/LICENSE
  */
 
-part of music_dna;
+part of audio;
 
 class AudioRenderer {
 

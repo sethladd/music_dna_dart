@@ -3,11 +3,12 @@
  * For licensing see http://lab.aerotwist.com/canvas/music-dna/LICENSE
  */
 
-import 'package:music_dna/music_dna.dart';
+import 'package:music_dna/audio.dart';
 
 import 'dart:typed_data' show Uint8List;
 import 'dart:html'
-  show Blob, Element, FileReader, ProgressEvent, document, window, querySelector;
+  show Blob, Element, FileReader, ProgressEvent, document,
+       window, querySelector;
 import 'dart:async' show Future;
 import 'dart:web_audio' show AudioBuffer;
 
@@ -46,7 +47,7 @@ class MusicDNA {
   Future parse(Blob file) {
     var fileReader = new FileReader();
     fileReader.readAsArrayBuffer(file);
-    
+
     return fileReader.onLoadEnd.first.then((ProgressEvent evt) {
       var reader = evt.target as FileReader;
       return audioParser.parseArrayBuffer(reader.result);
